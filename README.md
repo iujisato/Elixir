@@ -1,20 +1,17 @@
-# Hangman
+# Hangman Elixir
+Refactor Hangman's Clojure to Elixir.
 
-**TODO: Add description**
+<details>
+<summary>Its pretty easy to guess the secret word, but if you dont want to have some fun click on the left arrow</summary>
+The secret word for the clojure's hangman is `elixir`
+</details>
 
-## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+## Requirements
+...
 
-  1. Add hangman to your list of dependencies in `mix.exs`:
+## Usage
+...
 
-        def deps do
-          [{:hangman, "~> 0.0.1"}]
-        end
-
-  2. Ensure hangman is started before your application:
-
-        def application do
-          [applications: [:hangman]]
-        end
-
+## FAQ
+...

@@ -11,8 +11,7 @@ defmodule Hangman do
   def keyword_letters(keyword) do
     blocked_chars = MapSet.new(["", "\n", " "])
 
-
-    String.split(keyword, "", trim: true)
+    String.split(String.upcase(keyword), "")
       |> MapSet.new
       |> MapSet.difference(blocked_chars)
   end
@@ -28,6 +27,7 @@ defmodule Hangman do
 
       true ->
         guess = String.strip(IO.gets "chuta aí ")
+                  |> String.upcase
         if MapSet.member?(keyword_letters(keyword), guess) do
           IO.puts "Acertou mizeráavi"
           game2(remaining_chances, keyword, MapSet.put(right_guesses, guess))
@@ -39,7 +39,7 @@ defmodule Hangman do
   end
 
   def game do
-    game2(3, "Ovo", MapSet.new)
+    game2(3, "ovo branco", MapSet.new)
   end
   # iex> Benchmark.measure(fn -> Hangman.game1(600_000) end)
   # 11.394374

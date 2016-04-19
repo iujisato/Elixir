@@ -18,4 +18,3 @@ The secret word for the clojure's hangman is `Elixir`
 iex -S mix
 Hangman.game
 ```
-and have fun!

@@ -1,4 +1,17 @@
 defmodule Hangman do
+  @doc ~S"""
+  Receives a keyword string and returns a mapset of string characters, excluding
+  blocked chars.
+
+  ## Example
+
+      iex> Hangman.keyword_letters("banana")
+      #MapSet<["a", "b", "n"]>
+
+      iex> Hangman.keyword_letters("bob sponge")
+      #MapSet<["b", "e", "g", "n", "o", "p", "s"]>
+
+  """
   def keyword_letters(keyword) do
     blocked_chars = MapSet.new(["", "\n", " "])
 
@@ -7,6 +20,24 @@ defmodule Hangman do
       |> MapSet.difference(blocked_chars)
   end
 
+  @doc ~S"""
+  Receives the current game stats, like "Remaining chances" or "Right guesses"
+  and return a visual feedback on console.
+
+  ## Example
+
+      iex> Hangman.feedback_interface(4, "bob sponge", MapSet.new)
+      :ok
+      # Remaining chances: 4
+      # ___ ______
+
+      iex> Hangman.feedback_interface(2, "bob sponge", MapSet.new(["b", "n", "g"]))
+      :ok
+      # Remaining chances: 2
+      # b_b ___ng_
+
+
+  """
   def feedback_interface(remaining_chances, keyword, right_guesses) do
     IO.puts "Remaining chances: #{remaining_chances}"
 

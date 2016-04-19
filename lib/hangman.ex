@@ -16,11 +16,45 @@ defmodule Hangman do
       |> MapSet.difference(blocked_chars)
   end
 
+  # (defn feedback-interface [remaining-chances word right-guesses]
+  #   (println "Remaining chances:" remaining-chances)
+  #   (doseq [character (seq word)]
+  #   (if (contains? right-guesses (str character))
+  #       (print character " ")
+  #       (print "_" " ")))
+  #   (println))
+
+  def feedback_interface(remaining_chances, keyword, right_guesses) do
+    IO.puts "Remaining chances: #{remaining_chances}"
+
+    cond do
+    MapSet.disjoint?(keyword_letters(keyword), right_guesses) ->
+      guess_list = keyword_letters(keyword)
+                     |> MapSet.to_list
+
+      keyword_feedback = String.replace(keyword, guess_list, "_")
+      IO.puts keyword_feedback
+
+    true ->
+      guess_mapset = MapSet.difference(keyword_letters(keyword), right_guesses)
+
+      if MapSet.size(guess_mapset) > 0 do
+          guess_list = MapSet.to_list(guess_mapset)
+          keyword_feedback = String.replace(keyword, guess_list, "_")
+          IO.puts keyword_feedback
+      else
+          IO.puts keyword
+      end
+    end
+  end
+
+
   def game2(0, _, _) do
     IO.puts "Você perdeu!"
   end
 
   def game2(remaining_chances, keyword, right_guesses) do
+    feedback_interface(remaining_chances, keyword, right_guesses)
     cond do
       MapSet.equal?(right_guesses, keyword_letters(keyword)) ->
         IO.puts "Você ganhou!"
@@ -39,7 +73,7 @@ defmodule Hangman do
   end
 
   def game do
-    game2(3, "ovo branco", MapSet.new)
+    game2(3, "OVO BRANCO", MapSet.new)
   end
   # iex> Benchmark.measure(fn -> Hangman.game1(600_000) end)
   # 11.394374

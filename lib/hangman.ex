@@ -4,35 +4,43 @@ defmodule Hangman do
   # 11.312048
   # 11.276873
 
-  # def right_word? do
-  #   remaining_letters(word, right_guesses).empty?
-  # end
-
   # Returns keyword mapset with characters
   # Hangman.keyword_letters
   # Tell me a secret keyword! Banana
   # MapSet<["B", "a", "n"]>
-  def keyword_letters do
-    keyword = IO.gets "Tell me a secret keyword! "
+  def keyword_letters(keyword) do
     blocked_chars = MapSet.new(["", "\n", " "])
+
 
     String.split(keyword, "", trim: true)
       |> MapSet.new
       |> MapSet.difference(blocked_chars)
   end
 
-  def guesses do
-    MapSet.new
-  end
-
   def game2(0, _, _) do
     IO.puts "Você perdeu!"
   end
 
-  def game2(remaining_chances, guesses) do
-    game2((remaining_chances - 1), guesses)
+  def game2(remaining_chances, keyword, right_guesses) do
+    cond do
+      MapSet.equal?(right_guesses, keyword_letters(keyword)) ->
+        IO.puts "Você ganhou!"
+
+      true ->
+        guess = String.strip(IO.gets "chuta aí ")
+        if MapSet.member?(keyword_letters(keyword), guess) do
+          IO.puts "Acertou mizeráavi"
+          game2(remaining_chances, keyword, MapSet.put(right_guesses, guess))
+        else
+          IO.puts "Errou"
+          game2((remaining_chances - 1), keyword, right_guesses)
+        end
+    end
   end
 
+  def game do
+    game2(3, "Ovo", MapSet.new)
+  end
   # iex> Benchmark.measure(fn -> Hangman.game1(600_000) end)
   # 11.394374
   # 11.410963
